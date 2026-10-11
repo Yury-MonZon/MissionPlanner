@@ -2,6 +2,7 @@
 using System.Drawing;
 using System.Drawing.Drawing2D;
 using System.Windows.Forms;
+using MissionPlanner.Utilities;
 
 namespace MissionPlanner.Controls.BackstageView
 {
@@ -84,7 +85,7 @@ namespace MissionPlanner.Controls.BackstageView
                var arrowBrush = new SolidBrush(this.ContentPageColor);
 
                var midheight = Height / 2;
-               var arSize = 8;
+               var arSize = DesktopScale.Scale(8);
 
                var arrowPoints = new[]
                                      {
@@ -93,7 +94,7 @@ namespace MissionPlanner.Controls.BackstageView
                                          new Point(Width, midheight - arSize)
                                      };
 
-               g.DrawString(Text, new Font(FontFamily.GenericSansSerif, 10 * (100 / g.DpiX), FontStyle.Bold), new SolidBrush(SelectedTextColor), 5, 6);
+               g.DrawString(Text, new Font(FontFamily.GenericSansSerif, 10 * (100 / g.DpiX) * DesktopScale.Factor, FontStyle.Bold), new SolidBrush(SelectedTextColor), DesktopScale.Scale(5), DesktopScale.Scale(6));
 
                var pencilBrush = new Pen(this.PencilBorderColor);
 
@@ -117,7 +118,7 @@ namespace MissionPlanner.Controls.BackstageView
                    g.DrawLine(butPen, 0, Height - 1, Width, Height - 1);
                }
                 
-                g.DrawString(Text, new Font(this.Font.FontFamily,10 * (100/g.DpiX), FontStyle.Bold), new SolidBrush(this.UnSelectedTextColor), 5, 6);
+                g.DrawString(Text, new Font(this.Font.FontFamily,10 * (100/g.DpiX) * DesktopScale.Factor, FontStyle.Bold), new SolidBrush(this.UnSelectedTextColor), DesktopScale.Scale(5), DesktopScale.Scale(6));
            }
         }
 

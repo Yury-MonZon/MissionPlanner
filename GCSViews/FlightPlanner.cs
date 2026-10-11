@@ -4902,12 +4902,13 @@ namespace MissionPlanner.GCSViews
 
             e.Graphics.ResetTransform();
 
-            polyicon.Location = new Point(10, 100);
+            polyicon.Location = new Point(DesktopScale.Scale(10), DesktopScale.Scale(100));
             polyicon.Paint(e.Graphics);
 
             e.Graphics.ResetTransform();
 
-            zoomicon.Location = new Point(10, polyicon.Location.Y + polyicon.Height + 5);
+            zoomicon.Location = new Point(DesktopScale.Scale(10),
+                polyicon.Location.Y + polyicon.Rectangle.Height + DesktopScale.Scale(5));
             zoomicon.Paint(e.Graphics);
 
             e.Graphics.ResetTransform();

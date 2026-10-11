@@ -6,6 +6,7 @@ using System.Linq;
 using System.Windows.Forms;
 using log4net;
 using MissionPlanner.Controls.BackstageView;
+using MissionPlanner.Utilities;
 
 namespace MissionPlanner.Controls.BackstageView
 {
@@ -29,7 +30,7 @@ namespace MissionPlanner.Controls.BackstageView
         private readonly BackstageViewCollection _items = new BackstageViewCollection();
         private BackstageViewPage _activePage;
 
-        private const int ButtonHeight = 30;
+        private static int ButtonHeight => DesktopScale.Scale(30);
 
         private List<BackstageViewPage> expanded = new List<BackstageViewPage>();
 
@@ -211,7 +212,7 @@ namespace MissionPlanner.Controls.BackstageView
         /// <param name="spacerheight">the amount to space by</param>
         public void AddSpacer(int spacerheight)
         {
-            ButtonTopPos += spacerheight;
+            ButtonTopPos += DesktopScale.Scale(spacerheight);
         }
 
         private void CreateLinkButton(BackstageViewPage page, bool haschild = false, bool child = false)
@@ -230,7 +231,7 @@ namespace MissionPlanner.Controls.BackstageView
             {
                 int count = label.Split('\n').Count();
                 label = "      " + label.Replace("\n", "\n      ");
-                heightextra = 15 * (count - 1);
+                heightextra = DesktopScale.Scale(15) * (count - 1);
             }
 
             var lnkButton = new BackstageViewButton
@@ -335,7 +336,7 @@ namespace MissionPlanner.Controls.BackstageView
                 }
                 else
                 {
-                    ButtonTopPos += page.Spacing;
+                    ButtonTopPos += DesktopScale.Scale(page.Spacing);
                 }
             }
 

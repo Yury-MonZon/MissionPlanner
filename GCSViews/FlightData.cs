@@ -832,7 +832,7 @@ namespace MissionPlanner.GCSViews
             try
             {
                 if (hud1 != null)
-                    Settings.Instance["FlightSplitter"] = MainH.SplitterDistance.ToString();
+                    Settings.Instance["FlightSplitter"] = DesktopScale.Unscale(MainH.SplitterDistance).ToString();
             }
             catch
             {
@@ -2750,7 +2750,7 @@ namespace MissionPlanner.GCSViews
 
             if (Settings.Instance.ContainsKey("FlightSplitter"))
             {
-                MainH.SplitterDistance = Settings.Instance.GetInt32("FlightSplitter");
+                MainH.SplitterDistance = DesktopScale.Scale(Settings.Instance.GetInt32("FlightSplitter"));
             }
 
             if (Settings.Instance.ContainsKey("russian_hud"))
@@ -6162,8 +6162,11 @@ namespace MissionPlanner.GCSViews
             var g = Graphics.FromImage(bmp);
             g.Clear(Color.Transparent);
 
-            int x = 10;
-            int y = 10;
+            // laid out in 96 DPI pixels
+            int x = DesktopScale.Scale(10);
+            int y = DesktopScale.Scale(10);
+            int row = DesktopScale.Scale(15);
+            int name = DesktopScale.Scale(120);
 
             var list = MainV2.comPort.MAV.cs.GetItemList(true);
             var cs = bindingSourceStatusTab.Current as CurrentState;
@@ -6171,19 +6174,19 @@ namespace MissionPlanner.GCSViews
 
             foreach (var field in list)
             {
-                g.DrawString(field, this.Font, br, new RectangleF(x, y, 120, 15));
+                g.DrawString(field, this.Font, br, new RectangleF(x, y, name, row));
 
                 if (cs != null)
                     g.DrawString(typeof(CurrentState).GetProperty(field).GetValue(cs)?.ToString(), this.Font,
-                        br, new RectangleF(x + 120, y, 50, 15));
+                        br, new RectangleF(x + name, y, DesktopScale.Scale(50), row));
 
                 x += 0;
-                y += 15;
+                y += row;
 
-                if (y > tabStatus.Height - 30)
+                if (y > tabStatus.Height - DesktopScale.Scale(30))
                 {
-                    x += 190;
-                    y = 10;
+                    x += DesktopScale.Scale(190);
+                    y = DesktopScale.Scale(10);
                 }
             }
 
@@ -6193,7 +6196,7 @@ namespace MissionPlanner.GCSViews
                                                              | BindingFlags.Instance | BindingFlags.NonPublic, null,
                     tabStatus, new object[] { true });
 
-                tabStatus.AutoScrollMinSize = new Size(x + 164, 0);
+                tabStatus.AutoScrollMinSize = new Size(x + DesktopScale.Scale(164), 0);
             }
             e.Graphics.TranslateTransform(tabStatus.AutoScrollPosition.X,
                 tabStatus.AutoScrollPosition.Y);

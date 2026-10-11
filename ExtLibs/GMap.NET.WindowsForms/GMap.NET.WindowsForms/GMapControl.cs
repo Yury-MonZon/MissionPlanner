@@ -2654,6 +2654,13 @@ namespace GMap.NET.WindowsForms
 
         private ScaleModes scaleMode = ScaleModes.Integer;
 
+        /// <summary>
+        /// Scale tiles and the map are drawn at, for a high DPI desktop. At 2 each tile covers
+        /// twice the pixels, so a zoom level shows the same area as on a normal desktop.
+        /// Set before maps are created.
+        /// </summary>
+        public static float TileScale { get; set; } = 1;
+
         [Category("GMap.NET")]
         [Description("map scale type")]
         public ScaleModes ScaleMode
@@ -2691,7 +2698,7 @@ namespace GMap.NET.WindowsForms
                     {
                         float scaleValue = (float) Math.Pow(2d, remainder);
                         {
-                            MapRenderTransform = scaleValue;
+                            MapRenderTransform = scaleValue * TileScale;
                         }
 
                         ZoomStep = Convert.ToInt32(value - remainder);
@@ -2700,7 +2707,7 @@ namespace GMap.NET.WindowsForms
 #endif
                     {
 #if !PocketPC
-                        MapRenderTransform = null;
+                        MapRenderTransform = TileScale == 1 ? (float?) null : TileScale;
 #endif
                         ZoomStep = (int) Math.Floor(value);
                         //zoomReal = ZoomStep;

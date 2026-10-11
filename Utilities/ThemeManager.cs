@@ -308,6 +308,9 @@ namespace MissionPlanner.Utilities
         /// <param name="control"></param>
         public static void ApplyThemeTo(Control control)
         {
+            // before AutoScaleMode is turned off, so containers still rescale to scaled fonts
+            LinuxDesktop.ScaleControl(control);
+
             if (control is ContainerControl)
                 ((ContainerControl)control).AutoScaleMode = AutoScaleMode.None;
 

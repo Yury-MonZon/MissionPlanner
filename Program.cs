@@ -150,6 +150,8 @@ namespace MissionPlanner
             if (MONO && Settings.isUnix)
                 MonoTableLayoutSettingsConverter.Register();
 
+            LinuxDesktop.PrepareDesktopScale();
+
             Directory.SetCurrentDirectory(Settings.GetRunningDirectory());
 
             var listener = new TextWriterTraceListener(
@@ -162,6 +164,7 @@ namespace MissionPlanner
             Thread = Thread.CurrentThread;
 
             System.Windows.Forms.Application.EnableVisualStyles();
+            LinuxDesktop.ApplyDesktopScale();
             XmlConfigurator.Configure(LogManager.GetRepository(Assembly.GetCallingAssembly()));
             if (Environment.OSVersion.Platform == PlatformID.Unix)
             {

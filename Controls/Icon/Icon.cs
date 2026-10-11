@@ -1,5 +1,6 @@
 ﻿using System.Drawing;
 using System.Drawing.Drawing2D;
+using MissionPlanner.Utilities;
 
 namespace MissionPlanner.Controls.Icon
 {
@@ -80,13 +81,15 @@ namespace MissionPlanner.Controls.Icon
 
         public Rectangle Rectangle
         {
-            get { return new Rectangle(Location.X, Location.Y, Width, Height); }
+            // icons draw in 96 DPI units, scaled to the desktop in Paint
+            get { return new Rectangle(Location.X, Location.Y, DesktopScale.Scale(Width), DesktopScale.Scale(Height)); }
         }
 
         public void Paint(Graphics g)
         {
             // move 0,0 to out start location - no clipping is used, so we can draw anywhere on the parent control
             g.TranslateTransform(Location.X, Location.Y);
+            g.ScaleTransform(DesktopScale.Factor, DesktopScale.Factor);
             g.InterpolationMode = InterpolationMode.High;
             g.SmoothingMode = SmoothingMode.AntiAlias;
 

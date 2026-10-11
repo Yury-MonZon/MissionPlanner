@@ -945,8 +945,8 @@ namespace MissionPlanner
                 if (Settings.Instance["MainLocX"] != null && Settings.Instance["MainLocY"] != null)
                 {
                     this.StartPosition = FormStartPosition.Manual;
-                    Point startpos = new Point(Settings.Instance.GetInt32("MainLocX"),
-                        Settings.Instance.GetInt32("MainLocY"));
+                    Point startpos = new Point(DesktopScale.Scale(Settings.Instance.GetInt32("MainLocX")),
+                        DesktopScale.Scale(Settings.Instance.GetInt32("MainLocY")));
 
                     // fix common bug which happens when user removes a monitor, the app shows up
                     // offscreen and it is very hard to move it onscreen.  Also happens with
@@ -976,9 +976,9 @@ namespace MissionPlanner
                 }
 
                 if (Settings.Instance["MainHeight"] != null)
-                    this.Height = Settings.Instance.GetInt32("MainHeight");
+                    this.Height = DesktopScale.Scale(Settings.Instance.GetInt32("MainHeight"));
                 if (Settings.Instance["MainWidth"] != null)
-                    this.Width = Settings.Instance.GetInt32("MainWidth");
+                    this.Width = DesktopScale.Scale(Settings.Instance.GetInt32("MainWidth"));
 
                 // set presaved default telem rates
                 if (Settings.Instance["CMB_rateattitude"] != null)
@@ -1093,7 +1093,7 @@ namespace MissionPlanner
             }
 
             MenuArduPilot.Image = new Bitmap(Properties.Resources._0d92fed790a3a70170e61a86db103f399a595c70,
-                (int) (200), 31);
+                DesktopScale.Scale(200), DesktopScale.Scale(31));
             MenuArduPilot.Width = MenuArduPilot.Image.Width;
 
             if (Program.Logo2 != null)
@@ -2014,12 +2014,12 @@ namespace MissionPlanner
             GMap.NET.GMaps.Instance.CacheOnIdleRead = false;
             GMap.NET.GMaps.Instance.BoostCacheEngine = true;
 
-            Settings.Instance["MainHeight"] = this.Height.ToString();
-            Settings.Instance["MainWidth"] = this.Width.ToString();
+            Settings.Instance["MainHeight"] = DesktopScale.Unscale(this.Height).ToString();
+            Settings.Instance["MainWidth"] = DesktopScale.Unscale(this.Width).ToString();
             Settings.Instance["MainMaximised"] = this.WindowState.ToString();
 
-            Settings.Instance["MainLocX"] = this.Location.X.ToString();
-            Settings.Instance["MainLocY"] = this.Location.Y.ToString();
+            Settings.Instance["MainLocX"] = DesktopScale.Unscale(this.Location.X).ToString();
+            Settings.Instance["MainLocY"] = DesktopScale.Unscale(this.Location.Y).ToString();
 
             log.Info("close logs");
 
