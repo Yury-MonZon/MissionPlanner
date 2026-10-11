@@ -3167,6 +3167,8 @@ namespace MissionPlanner
 
         protected override void OnLoad(EventArgs e)
         {
+            LinuxDesktop.SetWMClass(this);
+
             // check if its defined, and force to show it if not known about
             if (Settings.Instance["menu_autohide"] == null)
             {
